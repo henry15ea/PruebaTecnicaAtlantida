@@ -13,7 +13,7 @@ tecnologías utilizadas para el desarrollo:
 •	Dapper.
 •	JWT
 
-Desarrollo y explicación de elementos de la API REST .
+-------------------------------------------------------API REST .--------------------------------------------------------------------
 
 La API Rest esta desarrollada utilizando tecnologías .Net , C# ,MVC . basado en el proyecto Web API que ofrece Visual Studio .
 La depuración de la API se ha hecho con Swagger y POSTMAN .
