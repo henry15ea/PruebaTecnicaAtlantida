@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PortalAtlantida</title>
+   <!----<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="~/lib/materialize/css/materialize.css" />
+
+    <!--
+
+     
+     <link rel="stylesheet" href="~/lib/onsenui/css/onsenui.css" />
+    <link rel="stylesheet" href="~/lib/onsenui/css/old-onsen-css-components.css" />
+    -->
+  
+</head>
+<body>
+    <header>
+         <nav>
+            <div class="nav-wrapper red darken-4">
+              <a href="/" class="brand-logo container">
+                  <img src="\sources\logoBA-plano.png" height=40/>
+              </a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="sass.html">Ayuda</a></li>
+              </ul>
+            </div>
+          </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            
+        </main>
+    </div>
+
+  
+    <footer class="page-footer red darken-4">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <div class="footer-copyright">
+                    <div class="container">
+                    © 2023 Copyright 
+                    <br />
+                    <label>Henry Ernesto Aquino Guzman</label>
+                    </div>
+                  </div>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Servicios</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="/">Banca Privada</a></li>
+                  <li><a class="grey-text text-lighten-3" href="/">Banca Personas</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+        </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <!----<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>-->
+    <script src="~/lib/onsenui/js/onsenui.js"></script>
+    <script src="~/lib/materialize/js/materialize.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

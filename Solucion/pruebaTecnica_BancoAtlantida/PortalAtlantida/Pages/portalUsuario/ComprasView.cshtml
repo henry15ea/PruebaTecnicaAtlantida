@@ -1,0 +1,46 @@
+﻿@page
+@model PortalAtlantida.Pages.portalUsuario.ComprasViewModel
+@{
+    Layout = "/Pages/Shared/_layoutUsuario.cshtml";
+}
+
+<div>
+<button class="btn modal-trigger" href="#modal1">Abrir Modal</button>
+  <div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Formulario de Compra</h4>
+    <div class="row">
+      <form class="col s12">
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="fechaCompra" type="text" class="datepicker">
+            <label for="fechaCompra">Fecha de Compra</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="descripcionCompra" type="text">
+            <label for="descripcionCompra">Descripción de Compra</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <input id="montoCompra" type="number" step="0.01">
+            <label for="montoCompra">Monto de Compra</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Guardar</a>
+  </div>
+</div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);  
+    var datepickers = document.querySelectorAll('.datepicker');
+    var dateInstances = M.Datepicker.init(datepickers, { format: 'yyyy-mm-dd' });
+  });
+</script>

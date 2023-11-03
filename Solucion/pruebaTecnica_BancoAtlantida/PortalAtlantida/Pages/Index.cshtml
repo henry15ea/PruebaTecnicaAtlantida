@@ -1,0 +1,74 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Inicio";
+
+ 
+}
+
+<div class="text-center">
+    <br />
+    <div class="container-fluid">
+
+        <div class="row">
+              <div class="col s8">
+                  <!--carousel-->
+                    <div class="carousel carousel-slider">
+                        <a class="carousel-item" href="#one!"><img src="\sources\af-f1-ba-banner-web.jpg" height=350></a>
+                        <a class="carousel-item" href="#two!"><img src="\sources\banner-web-auxilio-plus.jpg" height=350></a>
+                        <a class="carousel-item" href="#three!"><img src="\sources\banner-web-horarios-sm-2023.jpg" height=350></a>
+                        <a class="carousel-item" href="#four!"><img src="\sources\banner-web-matricula-de-vehiculos-oct.jpg" height=350></a>
+                        <a class="carousel-item" href="#five!"><img src="\sources\banner-web-registro-de-cuentas-08-2023.jpg" height=350></a>
+                      </div>
+                  <!--End caousel-->
+              </div>
+              <div class="col s4 grey lighten-4 ">
+                  <div><h5>Ingresa a tu cuenta</h5></div>
+                  <!--login-->
+                  <form method="post" class="">
+                        
+                        <span>
+                          <div>
+                              <input id="username" name="username" class="text-input text-input--material" placeholder="Usuario" type="text" required>
+                          </div>
+                          <br />
+                          <div>
+                              <input id="password" name="password" class="text-input text-input--material" placeholder="Clave" type="password" required>
+                          <div>
+                        </span>
+                        <br />
+                        <button type="submit" class='btn waves-effect waves-light grey darken-3 btn-block'>Iniciar sesión</button>
+                    </form>
+                    <br />
+                  <br />
+                  <!--fin login-->
+              </div>
+              <div class="col s12"></div>
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+              var elems = document.querySelectorAll('.carousel');
+              var instances = M.Carousel.init(elems);
+
+                  setInterval(function() {
+                    instances[0].next();
+                }, 3000)
+            });
+
+
+              
+
+
+    </script>
+
+ <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var mensajeToast = '@TempData["MensajeToast"]';
+        if (mensajeToast) {
+            M.toast({html: mensajeToast});
+        }
+    });
+</script>
+</div>

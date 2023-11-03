@@ -1,0 +1,31 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "4d61312b-b6df-4a3c-a3a8-91a900a98e1f": {
+      "ProjectGuid": "4d61312b-b6df-4a3c-a3a8-91a900a98e1f",
+      "DisplayName": "BancoAtlantida_API",
+      "ColorIndex": 0
+    },
+    "73d078db-e0bb-4431-b220-ce485a0e1358": {
+      "ProjectGuid": "73d078db-e0bb-4431-b220-ce485a0e1358",
+      "DisplayName": "BancoAtlantida_API",
+      "ColorIndex": 1
+    },
+    "b12d5bad-5e00-42e1-bd08-7b0d8a647822": {
+      "ProjectGuid": "b12d5bad-5e00-42e1-bd08-7b0d8a647822",
+      "DisplayName": "BancoAtlantida_API_REST",
+      "ColorIndex": 2
+    },
+    "2287deef-d276-4a02-84a8-9c2f1eacd94f": {
+      "ProjectGuid": "2287deef-d276-4a02-84a8-9c2f1eacd94f",
+      "DisplayName": "PortalAtlantida",
+      "ColorIndex": 3
+    },
+    "2e18fc38-5445-463e-968c-24c278bedfa3": {
+      "ProjectGuid": "2e18fc38-5445-463e-968c-24c278bedfa3",
+      "DisplayName": "ServiceToken",
+      "ColorIndex": 4
+    }
+  },
+  "NextColorIndex": 5
+}

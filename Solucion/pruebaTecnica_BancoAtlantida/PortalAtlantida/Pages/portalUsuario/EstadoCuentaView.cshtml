@@ -1,0 +1,82 @@
+﻿@page
+@model PortalAtlantida.Pages.portalUsuario.EstadoCuentaViewModel
+@{
+    Layout = "/Pages/Shared/_layoutUsuario.cshtml";
+}
+
+<div class="container">
+    <h5>Informacion de cuenta titular</h5>
+        <ul class="collection">
+    <li class="collection-item avatar">
+      <i data-feather="person"></i>
+
+      <span class="title"><b>Nombre y Apellidos</b></span>
+      <p>
+          @Model.datosApiRest.datos.result[0].nombre @Model.datosApiRest.datos.result[0].apellidos
+      </p>
+    </li>
+
+    <li class="collection-item avatar">
+      <i data-feather="person"></i>
+
+      <span class="title"><b>Saldo Actual</b></span>
+      <p>
+         $@Model.datosApiRest.datos.result[0].saldoDisponible
+      </p>
+    </li>
+
+    <li class="collection-item avatar">
+      <i data-feather="person"></i>
+
+      <span class="title"><b>Monto total de compras Mes Actual Y Mes Anterior</b></span>
+      <p>
+         @{
+                var primerResultado = Model.datosApiRest.datos.result.FirstOrDefault();
+                if (primerResultado != null)
+                {
+                    var sumaCompras = primerResultado.montoTotalComprasMesActual + primerResultado.montoTotalComprasMesAnterior;
+                    @($"$ {sumaCompras}")
+                }   
+            }
+      </p>
+    </li>
+
+    <li class="collection-item avatar">
+      <i data-feather="person"></i>
+
+      <span class="title"><b>interes bonificable</b></span>
+      <p>
+         @Model.datosApiRest.datos.result[0].interesBonificable %
+      </p>
+    </li>
+
+    <li class="collection-item avatar">
+      <i data-feather="person"></i>
+
+      <span class="title"><b>Cuota Minima de Pago</b></span>
+      <p>
+        $@Model.datosApiRest.datos.result[0].cuotaMinimaPagar
+      </p>
+    </li>
+    
+    <li class="collection-item avatar">
+      <i data-feather="person"></i>
+
+      <span class="title"><b>Monto de contado a pagar</b></span>
+      <p>
+         $@Model.datosApiRest.datos.result[0].montoTotalContado
+      </p>
+    </li>
+
+     <li class="collection-item avatar">
+      <i data-feather="person"></i>
+
+      <span class="title"><b>Monto de contado total a pagar con intereses</b></span>
+      <p>
+         $@Model.datosApiRest.datos.result[0].montoTotalContadoInteres
+      </p>
+    </li>
+
+
+  </ul>
+</div>

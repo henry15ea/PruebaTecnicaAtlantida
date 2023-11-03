@@ -1,0 +1,177 @@
+﻿@page
+@model PortalAtlantida.Pages.portalUsuario.HomeUserModel
+@{
+   // Layout = "~/Shared/_layoutUsuario.cshtml";.
+    Layout = "/Pages/Shared/_layoutUsuario.cshtml";
+    ViewData["Title"] = "Home";
+}
+
+<div class="content-padded">
+   
+    <div class="row grey lighten-4">
+            <div class="col s12">
+            <h4>Cuentas de titular</h4>
+       
+            @{
+                // Verifica si hay datos en la variable datosApiComprasRest
+                if (@Model.datosApiRest.datos.result[0] != null && @Model.datosApiRest.datos.result.Count > 0)
+                {
+                    <div class="row container-lg">
+                          <div class="col s12 offset-m2 l6 offset-l3">
+                            <a href="/portalUsuario/EstadoCuentaView">
+                                <div class="card credit-card hoverable">
+                                  <div class="card-content">
+                                      <div class="row">
+                                      <div class="col s12">
+                                        <b class="credit-card__label ">TARGETA  </b>
+                                        <div class="credit-card__name align-content-center">@Model.datosApiRest.datos.result[0].numeroTargeta</div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col s12">
+                                        <b class="credit-card__label">NOMBRE DEL TITULAR</b>
+                                        <div class="credit-card__name">
+                                            @Model.datosApiRest.datos.result[0].nombre
+                                            @Model.datosApiRest.datos.result[0].apellidos
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col s12">
+                                        <b class="credit-card__label">SALDO ACTUAL</b>
+                                        <div class="credit-card__balance">$ @Model.datosApiRest.datos.result[0].saldoDisponible</div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                             </a>
+                          </div>
+                        </div>
+
+                }
+                else
+                 {
+                    <p>No hay datos disponibles.</p>
+                  }
+             }
+        </div>
+    </div>
+
+<div class="container">
+<h5>Ultimas Compras Realizadas</h5>
+@{
+  // Verifica si hay datos en la variable datosApiComprasRest
+  if (@Model.datosApiComprasRest != null)
+  {
+    <table class="highlight responsive-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Detalle</th>
+          <th>Monto</th>
+          <!-- Agrega más columnas según tus necesidades -->
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var item in @Model.datosApiComprasRest.datos.result)
+        {
+          <tr>
+         
+             <td>@DateTime.Parse(@item.fechaCompra).ToString("dd-MM-yyyy")</td>
+            <td>@item.descripcionCompta</td>
+            <td>$@item.montoCompra</td>
+            <!-- Agrega más columnas según las propiedades de MVCompra -->
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+  else
+  {
+    <p>No hay datos disponibles.</p>
+  }
+}
+
+</div>
+
+
+  <div id="modal1" class="modal">
+  <div class="modal-content">
+    <h4>Formulario de Compra</h4>
+    <div class="row">
+<form method="post" asp-page-handler="CompraProducto" asp-page-handler-method="OnPostCompraProductoAsync">
+  @Html.AntiForgeryToken()
+  <div class="row">
+    <div class="input-field col s6">
+      <input id="fechaCompra" name="fechaCompra" type="date" class="">
+      <label for="fechaCompra">Fecha de Compra</label>
+    </div>
+    <div class="input-field col s6">
+      <input id="descripcionCompra" name="descripcionCompra" type="text">
+      <label for="descripcionCompra">Descripción de Compra</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s6">
+      <input id="montoCompra" name="montoCompra" type="number" step="0.01">
+      <label for="montoCompra">Monto de Compra</label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn">Guardar</button>
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+  </div>
+</form>
+
+    </div>
+  </div>
+
+</div>
+</div>
+
+ <br />
+<!-- Modal -->
+<div id="modal2" class="modal">
+  <div class="modal-content">
+      <br />
+    <h4>Registrar Pago</h4>
+<form method="post" asp-page-handler="PagoFactura" asp-page-handler-method="OnPostPagoFacturaAsync">
+  @Html.AntiForgeryToken()
+  <div class="input-field">
+    <input id="fechaPago" name="fechaPago" type="date" class="">
+    <label for="fechaPago">Fecha de Pago (yy-mm-dd)</label>
+  </div>
+  <div class="input-field">
+    <input id="montoPago" name="montoPago" type="number" class="validate">
+    <label for="montoPago">Monto de Pago</label>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn">Guardar</button>
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+  </div>
+</form>
+
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Inicializar el modal
+
+    // Inicializar el datepicker
+    //var datePickers = document.querySelectorAll('.datepicker');
+    //M.Datepicker.init(datePickers, {
+      //  format: 'yy-mm-dd'
+    //});
+
+
+});
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems);  
+    var datepickers = document.querySelectorAll('.datepicker');
+    var dateInstances = M.Datepicker.init(datepickers, { format: 'yyyy-mm-dd' });
+  });
+</script>

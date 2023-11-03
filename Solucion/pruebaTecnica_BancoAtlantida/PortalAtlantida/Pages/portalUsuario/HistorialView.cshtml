@@ -1,0 +1,130 @@
+﻿@page
+@model PortalAtlantida.Pages.portalUsuario.HistorialViewModel
+@{
+    Layout = "/Pages/Shared/_layoutUsuario.cshtml";
+}
+
+<div class="content-padded">
+    <br />
+    <div class="container">
+    <div class="row ">
+        <div class="col s8">
+            <h5>Ultimas Compras Realizadas</h5>
+        </div>
+        <div class="col s4">
+             <a class="waves-effect waves-light btn modal-trigger" href="#modal">Filtrar Compras</a>
+        </div>
+    </div>
+@{
+  // Verifica si hay datos en la variable datosApiComprasRest
+  if (@Model.datosApiComprasHist != null && @Model.datosApiComprasHist.datos.result.Count() >0)
+  {
+    <table class="highlight responsive-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Detalle</th>
+          <th>Monto</th>
+          <!-- Agrega más columnas según tus necesidades -->
+        </tr>
+      </thead>
+      <tbody id="tablaCompras">
+        @foreach (var item in @Model.datosApiComprasHist.datos.result)
+        {
+          <tr>
+            <td>@DateTime.Parse(@item.fechaCompra.ToString()).ToString("dd-MM-yyyy")</td>
+            <td>@item.descripcionCompta</td>
+            <td>$@item.montoCompra</td>
+            <!-- Agrega más columnas según las propiedades de MVCompra -->
+          </tr>
+        }
+      </tbody>
+    </table>
+
+    <ul class="pagination" id="paginacion"></ul>
+
+    <script>
+      // Obtén la referencia a la tabla y a la paginación
+      var tabla = document.getElementById("tablaCompras");
+      var paginacion = document.getElementById("paginacion");
+
+      // Define el número de elementos por página
+      var elementosPorPagina = 10;
+
+      // Calcula el número de páginas
+      var numPaginas = Math.ceil(tabla.rows.length / elementosPorPagina);
+
+      // Genera los enlaces de paginación
+      for (var i = 1; i <= numPaginas; i++) {
+        var enlace = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = "#!";
+        a.innerHTML = i;
+
+        // Agrega un evento de clic al enlace para mostrar la página correspondiente
+        a.addEventListener("click", function() {
+          // Obtén el número de página del enlace
+          var pagina = parseInt(this.innerHTML);
+
+          // Oculta todas las filas de la tabla
+          for (var j = 0; j < tabla.rows.length; j++) {
+            tabla.rows[j].style.display = "none";
+          }
+
+          // Muestra las filas correspondientes a la página seleccionada
+          for (var k = (pagina - 1) * elementosPorPagina; k < pagina * elementosPorPagina; k++) {
+            if (tabla.rows[k]) {
+              tabla.rows[k].style.display = "";
+            }
+          }
+        });
+
+        // Agrega el enlace a la paginación
+        enlace.appendChild(a);
+        paginacion.appendChild(enlace);
+      }
+    </script>
+  }
+  else
+  {
+    <p>No hay datos disponibles.</p>
+  }
+}
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h4>Formulario</h4>
+    <form method="post" asp-page-handler="FiltroCompra">
+          <label for="fechaInicio">Fecha de inicio:</label>
+          <input type="date" id="fechaInicio" name="fechaInicio">
+
+          <label for="fechaFinal">Fecha final:</label>
+          <input type="date" id="fechaFinal" name="fechaFinal">
+
+          <button class="waves-effect waves-light btn modal-trigger" type="submit">Buscar</button>
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+        </form>
+
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+
+ <script>
+
+$(document).ready(function() {
+  $('#fecha-final').datepicker({
+    format: 'yyyy-mm-dd'
+  });
+});
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems);
+    });
+  </script>

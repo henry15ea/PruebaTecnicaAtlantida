@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "ymTnQcUu2TMep5ogBlFvSwtsDbGK+btcBG01A+qBzhQ=",
+  "Source": "BancoAtlantida_API_REST",
+  "BasePath": "_content/BancoAtlantida_API_REST",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
