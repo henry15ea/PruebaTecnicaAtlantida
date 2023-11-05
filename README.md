@@ -3,7 +3,7 @@ Este repositorio sirve como base comprobable del desarrollo de prueba tecnica .\
 
 
 tecnologías utilizadas para el desarrollo:\n
-•	.NET \n
+•	.NET\n
 •	SQL Server.\n
 •	.NET Razor.\n
 •	JQUERY.\n
