@@ -76,6 +76,7 @@ https://mi _servidor:puerto_de_escucha/api
 
 Una vez que hemos configurado y que el proyecto de la API este corriendo en segundo plano , podemos correr el cliente . obteniendo las siguientes pantallas .
 
+------------------------------------ Captuas de pantalla -----------------------------------------
 
-
+![Pantalla principal](https://i.postimg.cc/Yq9nppLr/Snap-Crab-No-Name-2023-11-4-21-46-41-No-00.png)
 
