@@ -8,7 +8,7 @@ tecnologías utilizadas para el desarrollo:
 
 •	SQL Server.
 
-•	.NET Razor.
+•	Razor.
 
 •	JQUERY.
 
