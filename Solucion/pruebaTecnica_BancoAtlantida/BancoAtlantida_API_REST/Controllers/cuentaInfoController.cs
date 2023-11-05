@@ -11,6 +11,8 @@ using BancoAtlantida_API_REST.Models.requestEntidad;
 using BancoAtlantida_API_REST.Entidades;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using BancoAtlantida_API_REST.microservices.VerifyToken;
+using BancoAtlantida_API_REST.microservices.Entidades;
 
 namespace BancoAtlantida_API_REST.Controllers
 {
@@ -25,7 +27,7 @@ namespace BancoAtlantida_API_REST.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
             var tokenHeader = HttpContext.Request.Headers["Authorization"];
 
@@ -34,17 +36,30 @@ namespace BancoAtlantida_API_REST.Controllers
 
             if (tokenHeader.ToString().Length > 0)
             {
-                var datosToken = objwt.fn_VerificarToken(tokenHeader.ToString().Trim());
 
-                var claimsPrincipal = datosToken;
+                VerifyTokenCliente verifyToken = new VerifyTokenCliente();
+                LoginResponseEntidad entidadResponse = new LoginResponseEntidad();
+                MicroDefaultEntidad tdata = new MicroDefaultEntidad();
+
+                tdata.token = tokenHeader;
+
+                bool resp = await verifyToken.fn_VerifyToken(tdata);
+                entidadResponse = verifyToken.GetDataAPI();
+
+
+                
                 try {
-                    if (objwt.fn_esLegibleToken(tokenHeader.ToString().Trim()) == false)
+                    if (entidadResponse.status == false)
                     {
                         rp.mensajeServidor = "El token adquirido no es valido o ya ha caducado";
                         rp.mensaje = "El token adquirido no es valido o ya ha caducado";
                         rp.resultado = false;
                     }
                     else {
+                        var datosToken = objwt.fn_VerificarToken(entidadResponse.AccessToken.Trim());
+
+                        var claimsPrincipal = datosToken;
+
                         var authClaim = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/authentication");
                         string? authValue = authClaim?.Value;
 

@@ -8,6 +8,8 @@ using BancoAtlantida_API_REST.Models;
 using BancoAtlantida_API_REST.tools;
 using AutoMapper;
 using BancoAtlantida_API_REST.Models.requestEntidad;
+using BancoAtlantida_API_REST.microservices.Aunth;
+using BancoAtlantida_API_REST.microservices.Entidades;
 
 namespace BancoAtlantida_API_REST.Controllers
 {
@@ -23,7 +25,7 @@ namespace BancoAtlantida_API_REST.Controllers
 
 
         [HttpPost]
-        public IActionResult Index([FromBody] LoginDTO datos)
+        public async Task<IActionResult> IndexAsync([FromBody] LoginDTO datos)
         {
             ResponseEntidad rp = new ResponseEntidad();
 
@@ -31,24 +33,41 @@ namespace BancoAtlantida_API_REST.Controllers
             LoginModel loginModel = new LoginModel();
 
             RequestModelEntidad objEntidadResult = new RequestModelEntidad();
-
+            
             objEntidadResult = loginModel.fn_Islogued(datos);
 
-            rp.resultado = objEntidadResult.status;
+           
 
             if (objEntidadResult.status == true) {
+
+
+                AuthCliente requestApi = new AuthCliente();
+                UsuarioClavesEntidad datosUser = new UsuarioClavesEntidad();
+                LoginResponseEntidad lresp = new LoginResponseEntidad();
+
+
+                datosUser.username = datos.username.Trim();
+                datosUser.password = datos.password.Trim();
+
+
+
+                bool responseData = await requestApi.fn_loginUser(datosUser);
+
+                lresp = requestApi.GetDataAPI();
+                rp.resultado = lresp.status;
 
                 rp.mensajeServidor = "Las peticiones se han completado con exito";
                 rp.codigo = 200;
                 rp.mensaje = "El usuario existe en la db";
 
                 //generamos el token para el usuario que ha iniciado sesion
-                JwtFabric jwt = new JwtFabric();
+                //JwtFabric jwt = new JwtFabric();
 
-                String data = (string)objEntidadResult.result;
+                //String data = (string)objEntidadResult.result;
 
 
-                rp.token = jwt.fn_GenerateToken(data.Trim());
+                //rp.token = jwt.fn_GenerateToken(data.Trim());
+                rp.token = lresp.AccessToken.Trim();
 
 
 

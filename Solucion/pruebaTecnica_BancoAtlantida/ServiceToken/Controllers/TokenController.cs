@@ -58,9 +58,12 @@ namespace ServiceToken.Controllers
 
         }
 
-        [HttpPost("verify")]
-        public IActionResult verifyToken([FromBody] EntidadDefecto datos)
+        [HttpGet("verify")]
+        public IActionResult verifyToken()
         {
+            //[FromBody] EntidadDefecto datos
+            var tokenHeader = HttpContext.Request.Headers["Authorization"];
+
             LoginResponseDTO rp = new LoginResponseDTO();
             JwtBuilder objwt = new JwtBuilder();
 
@@ -70,14 +73,22 @@ namespace ServiceToken.Controllers
             EntidadResponseModels objEntidadResult = new EntidadResponseModels();
 
 
-            if (datos.Token.Length > 0)
+            if (tokenHeader.ToString().Length > 0)
             {
-                var datosToken = objwt.fn_VerificarToken(datos.Token.Trim());
+
+                EntidadDefecto datos = new EntidadDefecto();
+
+
+                var datosToken = objwt.fn_VerificarToken(tokenHeader.ToString().Trim());
 
                 var claimsPrincipal = datosToken;
                 try
                 {
-                    if (objwt.fn_esLegibleToken(datos.Token.Trim()) == false)
+                    datos.Token = tokenHeader.ToString().Trim();
+
+
+
+                    if (objwt.fn_esLegibleToken(tokenHeader.ToString().Trim()) == false)
                     {
                         rp.AccessToken = null;
                         rp.status = false;
@@ -130,9 +141,12 @@ namespace ServiceToken.Controllers
 
         }
 
-        [HttpPost("refresh")]
-        public IActionResult refreshToken([FromBody] EntidadDefecto datos)
+        [HttpGet("refresh")]
+        public IActionResult refreshToken()
         {
+            //[FromBody] EntidadDefecto datos
+            var tokenHeader = HttpContext.Request.Headers["Authorization"];
+
             LoginResponseDTO rp = new LoginResponseDTO();
             JwtBuilder objwt = new JwtBuilder();
 
@@ -142,14 +156,19 @@ namespace ServiceToken.Controllers
             EntidadResponseModels objEntidadResult = new EntidadResponseModels();
 
 
-            if (datos.Token.Length > 0)
+            if (tokenHeader.ToString().Length > 0)
             {
-                var datosToken = objwt.fn_VerificarToken(datos.Token.Trim());
+
+                EntidadDefecto datos = new EntidadDefecto();
+
+                var datosToken = objwt.fn_VerificarToken(tokenHeader.ToString().Trim());
 
                 var claimsPrincipal = datosToken;
                 try
                 {
-                    if (objwt.fn_esLegibleToken(datos.Token.Trim()) == false)
+                    datos.Token = tokenHeader.ToString().Trim();
+
+                    if (objwt.fn_esLegibleToken(tokenHeader.ToString().Trim()) == false)
                     {
                         rp.AccessToken = null;
                         rp.status = false;
@@ -205,7 +224,7 @@ namespace ServiceToken.Controllers
                                         rp.status = rps.status;
                                     }
                                     else {
-                                        rp.AccessToken = datos.Token.Trim();
+                                        rp.AccessToken = tokenHeader.ToString().Trim();
                                         rp.status = false;
                                     }
                                     
@@ -213,20 +232,20 @@ namespace ServiceToken.Controllers
                                 } 
                                 else 
                                 {
-                                    rp.AccessToken = datos.Token.Trim();
+                                    rp.AccessToken = tokenHeader.ToString().Trim();
                                     rp.status = false ;
                                 }
                                 
                             }
                             else
                             {
-                                rp.AccessToken = datos.Token.Trim();
+                                rp.AccessToken = tokenHeader.ToString().Trim();
                                 rp.status = false;
                             }
                         }
                         else
                         {
-                            rp.AccessToken = datos.Token.Trim();
+                            rp.AccessToken = tokenHeader.ToString().Trim();
                             rp.status = false;
                         }
 
@@ -235,7 +254,7 @@ namespace ServiceToken.Controllers
                 }
                 catch (Exception)
                 {
-                    rp.AccessToken = datos.Token.Trim();
+                    rp.AccessToken = tokenHeader.ToString().Trim();
                     rp.status = false;
                 }
 

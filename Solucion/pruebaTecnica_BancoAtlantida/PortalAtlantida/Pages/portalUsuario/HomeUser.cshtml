@@ -73,15 +73,17 @@
         </tr>
       </thead>
       <tbody>
-        @foreach (var item in @Model.datosApiComprasRest.datos.result)
-        {
-          <tr>
+        if (@Model.datosApiComprasRest.datos.result.Count >0){
+            @foreach (var item in @Model.datosApiComprasRest.datos.result)
+            {
+              <tr>
          
-             <td>@DateTime.Parse(@item.fechaCompra).ToString("dd-MM-yyyy")</td>
-            <td>@item.descripcionCompta</td>
-            <td>$@item.montoCompra</td>
-            <!-- Agrega más columnas según las propiedades de MVCompra -->
-          </tr>
+                 <td>@DateTime.Parse(@item.fechaCompra).ToString("dd-MM-yyyy")</td>
+                <td>@item.descripcionCompta</td>
+                <td>$@item.montoCompra</td>
+                <!-- Agrega más columnas según las propiedades de MVCompra -->
+              </tr>
+            }
         }
       </tbody>
     </table>

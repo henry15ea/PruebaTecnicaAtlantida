@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BancoAtlantida_API_REST.DTOS;
 using BancoAtlantida_API_REST.Entidades;
+using BancoAtlantida_API_REST.microservices.Entidades;
+using BancoAtlantida_API_REST.microservices.VerifyToken;
 using BancoAtlantida_API_REST.Models;
 using BancoAtlantida_API_REST.tools;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,7 @@ namespace BancoAtlantida_API_REST.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromBody] AgregarPagoDTO datos)
+        public async Task<IActionResult> IndexAsync([FromBody] AgregarPagoDTO datos)
         {
             //leyendo token desde el header 
 
@@ -31,9 +33,17 @@ namespace BancoAtlantida_API_REST.Controllers
 
             if (tokenHeader.ToString().Length > 0)
             {
-                var datosToken = objwt.fn_VerificarToken(tokenHeader.ToString().Trim());
 
-                var claimsPrincipal = datosToken;
+                VerifyTokenCliente verifyToken = new VerifyTokenCliente();
+                LoginResponseEntidad entidadResponse = new LoginResponseEntidad();
+                MicroDefaultEntidad tdata = new MicroDefaultEntidad();
+
+                tdata.token = tokenHeader;
+
+                bool resp = await verifyToken.fn_VerifyToken(tdata);
+                entidadResponse = verifyToken.GetDataAPI();
+
+                
                 try
                 {
                     if (objwt.fn_esLegibleToken(tokenHeader.ToString().Trim()) == false)
@@ -44,6 +54,10 @@ namespace BancoAtlantida_API_REST.Controllers
                     }
                     else
                     {
+                        var datosToken = objwt.fn_VerificarToken(entidadResponse.AccessToken.Trim());
+
+                        var claimsPrincipal = datosToken;
+
                         var authClaim = claimsPrincipal.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/authentication");
                         string? authValue = authClaim?.Value;
 
