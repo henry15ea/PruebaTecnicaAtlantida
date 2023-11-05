@@ -2,8 +2,9 @@
 Este repositorio sirve como base comprobable del desarrollo de prueba tecnica .\n
 
 
-tecnologías utilizadas para el desarrollo:\n
-•	.NET\n
+tecnologías utilizadas para el desarrollo:
+
+•	.NET
 •	SQL Server.\n
 •	.NET Razor.\n
 •	JQUERY.\n
