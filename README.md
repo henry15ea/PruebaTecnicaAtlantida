@@ -80,3 +80,5 @@ Una vez que hemos configurado y que el proyecto de la API este corriendo en segu
 
 ![Pantalla principal](https://i.postimg.cc/Yq9nppLr/Snap-Crab-No-Name-2023-11-4-21-46-41-No-00.png)
 
+![](https://i.postimg.cc/DyMC0t1q/Snap-Crab-No-Name-2023-11-4-21-46-58-No-00.png)
+
